@@ -1,6 +1,5 @@
 package com.epam.jmp.classloading;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.jmp.classloading.loader.ModuleEngine;
 import com.epam.jmp.classloading.module.MathModule;
 
 public class Runner {
@@ -17,17 +17,11 @@ public class Runner {
 			.getName());
 
 	public static void main(String[] args) {
-		LOG.info("Starting app");
-
 		String jarPath = args[0];
 
 		ModuleEngine engine = new ModuleEngine(jarPath);
 		Map<String, MathModule> modules = Collections.emptyMap();
-		try {
-			modules = engine.loadModules();
-		} catch (MalformedURLException e) {
-			LOG.error("Wrong jar path");
-		}
+		modules = engine.loadModules();
 
 		LOG.info("Available Math Modules:");
 		for (String key : modules.keySet()) {
@@ -48,7 +42,7 @@ public class Runner {
 				String argsInput = scanner.nextLine();
 
 				Integer[] ops = parseInts(argsInput);
-				LOG.info(module.process(ops));
+				LOG.info("Result = " + module.process(ops));
 			}
 		}
 	}
