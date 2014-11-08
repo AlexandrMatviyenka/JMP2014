@@ -8,7 +8,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "news")
 public class News {
 
-	private int id;
+	private Integer id;
 
 	@JacksonXmlProperty(localName = "title")
 	private String title;
@@ -22,11 +22,11 @@ public class News {
 	@JacksonXmlProperty(localName = "tags")
 	private List<String> tags;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
