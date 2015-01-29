@@ -1,27 +1,21 @@
-angular.module('todoApp', [])
-  .controller('EmployeeController', ['$scope', function($scope) {
-    $scope.todos = [
-      {text:'learn angular', done:true},
-      {text:'build an angular app', done:false}];
+(function(){
+	'use strict';
+	var app = angular.module('employeeManagement', ['employee']);
 
-    $scope.addTodo = function() {
-      $scope.todos.push({text:$scope.todoText, done:false});
-      $scope.todoText = '';
-    };
+	app.controller('EmployeesController', ['$http', '$scope', function($http, $scope) {
+		var self = this;
+		self.employees = [];
 
-    $scope.remaining = function() {
-      var count = 0;
-      angular.forEach($scope.todos, function(todo) {
-        count += todo.done ? 0 : 1;
-      });
-      return count;
-    };
+		$scope.$on('employeeChanged', function(event, args) {
+			$http.get('/employees').success(function(data) {
+				self.employees = data.map(function(employee) {
+					employee.started = new Date(employee.started);
+					return employee;
+				}) || [];
+			});
+		});
 
-    $scope.archive = function() {
-      var oldTodos = $scope.todos;
-      $scope.todos = [];
-      angular.forEach(oldTodos, function(todo) {
-        if (!todo.done) $scope.todos.push(todo);
-      });
-    };
-  }]);
+		$scope.$emit('employeeChanged');
+	}]);
+
+})();
