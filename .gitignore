@@ -1,13 +1,20 @@
 # Build Files #
+
+.gradle
 Projects/
 bin/
 target/
 build/
-.gradle
 
 # Eclipse Project Files #
+
 .classpath
 .settings
 
+# IDEA
+.idea
+*.iml
+
 # Logs
+
 *.log
